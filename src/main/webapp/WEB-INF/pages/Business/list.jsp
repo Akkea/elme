@@ -63,7 +63,7 @@
                 {field:'createTime', title: '创建时间'},
                 {field:'updateTime', title: '修改时间'}
             ]],
-            //设置传回的分页分页数量和分页大小名字，与Controller保持一致dd
+            //设置传回的分页分页数量和分页大小名字，与Controller保持一致
             request:{
                 pageName:'pageNum',
                 limitName : 'pageSize'
