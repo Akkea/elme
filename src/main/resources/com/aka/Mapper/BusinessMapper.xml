@@ -21,7 +21,7 @@
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
-    <sql id="column">id,store_name,store_address,store_blurb,main_image,order_type_id,start_price,delivery_price,store_remarks,create_time,update_time</sql>
+    <sql id="column">id,username,password,phone,email,store_name,store_address,store_blurb,main_image,order_type_id,start_price,delivery_price,store_remarks,store_status,create_time,update_time</sql>
     <select id="list" resultMap="base">
         select <include refid="column"/> from e_business
     </select>
