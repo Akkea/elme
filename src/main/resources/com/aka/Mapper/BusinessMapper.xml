@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aka.Mapper.BusinessMapper">
+    <resultMap id="base" type="com.aka.Entity.Business">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="phone" column="phone"/>
+        <result property="email" column="email"/>
+        <result property="storeName" column="store_name"/>
+        <result property="storeAddress" column="store_address"/>
+        <result property="storeBlurb" column="store_blurb"/>
+        <result property="mainImage" column="main_image"/>
+        <result property="orderTypeId" column="order_type_id"/>
+        <result property="startPrice" column="start_price"/>
+        <result property="deliveryPrice" column="delivery_price"/>
+        <result property="storeRemarks" column="store_remarks"/>
+        <result property="storeStatus" column="store_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+    <sql id="column">id,store_name,store_address,store_blurb,main_image,order_type_id,start_price,delivery_price,store_remarks,create_time,update_time</sql>
+    <select id="list" resultMap="base">
+        select <include refid="column"/> from e_business
+    </select>
+
+</mapper>
