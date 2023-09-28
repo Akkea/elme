@@ -13,7 +13,7 @@ public class Business {
     private String storeAddress;
     private String storeBlurb;
     private String mainImage;
-    private Integer orderTypeId;
+    private Integer orderType;
     private BigDecimal startPrice;
     private BigDecimal deliveryPrice;
     private String storeRemarks;
@@ -96,12 +96,12 @@ public class Business {
         this.mainImage = mainImage;
     }
 
-    public Integer getOrderTypeId() {
-        return orderTypeId;
+    public Integer getOrderType() {
+        return orderType;
     }
 
-    public void setOrderTypeId(Integer orderTypeId) {
-        this.orderTypeId = orderTypeId;
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
     }
 
     public BigDecimal getStartPrice() {
@@ -164,7 +164,7 @@ public class Business {
                 ", storeAddress='" + storeAddress + '\'' +
                 ", storeBlurb='" + storeBlurb + '\'' +
                 ", mainImage='" + mainImage + '\'' +
-                ", orderTypeId=" + orderTypeId +
+                ", orderType=" + orderType +
                 ", startPrice=" + startPrice +
                 ", deliveryPrice=" + deliveryPrice +
                 ", storeRemarks='" + storeRemarks + '\'' +

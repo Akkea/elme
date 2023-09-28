@@ -1,6 +1,7 @@
 package com.aka.Vo;
 
 import com.aka.Enumeration.BusinessStoreStatusEnum;
+import com.aka.Enumeration.BusinessStoreTypeEnum;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -15,7 +16,7 @@ public class BusinessVO {
     private String storeAddress;
     private String storeBlurb;
     private String mainImage;
-    private Integer orderTypeId;
+    private BusinessStoreTypeEnum orderType;
     private BigDecimal startPrice;
     private BigDecimal deliveryPrice;
     private String storeRemarks;
@@ -98,12 +99,12 @@ public class BusinessVO {
         this.mainImage = mainImage;
     }
 
-    public Integer getOrderTypeId() {
-        return orderTypeId;
+    public BusinessStoreTypeEnum getOrderType() {
+        return orderType;
     }
 
-    public void setOrderTypeId(Integer orderTypeId) {
-        this.orderTypeId = orderTypeId;
+    public void setOrderType(BusinessStoreTypeEnum orderType) {
+        this.orderType = orderType;
     }
 
     public BigDecimal getStartPrice() {

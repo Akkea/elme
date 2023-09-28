@@ -2,6 +2,7 @@ package com.aka.Service.impl;
 
 import com.aka.Entity.Business;
 import com.aka.Enumeration.BusinessStoreStatusEnum;
+import com.aka.Enumeration.BusinessStoreTypeEnum;
 import com.aka.Mapper.BusinessMapper;
 import com.aka.Service.BusinessService;
 import com.aka.Vo.BusinessVO;
@@ -25,7 +26,15 @@ public class BusinessServiceImpl implements BusinessService {
         PageHelper.startPage(pageNum,pageSize);
         List<Business> businessList = businessMapper.list();
         PageInfo pageInfo = PageInfo.of(businessList);
-        return LayuiVo.success(pageInfo.getTotal(),entityList2VoList(businessList));
+        List<BusinessVO> businessVOList = new ArrayList<>();
+        for (Business business: businessList) {
+            BusinessVO businessVO = new BusinessVO();
+            BeanUtils.copyProperties(business,businessVO);
+            businessVO.setStoreStatus(BusinessStoreStatusEnum.getStatus(business.getStoreStatus()));
+            businessVO.setOrderType(BusinessStoreTypeEnum.getType(business.getOrderType()));
+            businessVOList.add(businessVO);
+        }
+        return LayuiVo.success(pageInfo.getTotal(),businessVOList);
     }
     private BusinessVO entity2vo(Business business){
         BusinessVO businessVO = new BusinessVO();
@@ -40,5 +49,4 @@ public class BusinessServiceImpl implements BusinessService {
         }
         return businessVOList;
     }
-
 }
