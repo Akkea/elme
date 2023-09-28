@@ -47,10 +47,8 @@
             elem: '#business-list'
             ,url: '${pageContext.request.contextPath}/business/listPage'
             ,cols: [[
-                {field:'username', title: '用户名'},
-                {field:'password', title: '密码'},
-                {field:'phone', title: '手机号'},
-                {field:'emile', title: '邮箱'},
+                {type:'checkbox'},
+                {type:'numbers', title: '序号'},
                 {field:'storeName', title: '商家名字'},
                 {field:'storeAddress', title: '商家地址'},
                 {field:'storeBlurb', title: '简介'},
@@ -59,7 +57,9 @@
                 {field:'startPrice', title: '起送费'},
                 {field:'deliveryPrice', title: '配送费'},
                 {field:'storeRemarks', title: '备注'},
-                {field:'storeStatus', title: '状态'},
+                {title: '状态',templet:function (data) {
+                        return data.storeStatus.statusValues;
+                    }},
                 {field:'createTime', title: '创建时间'},
                 {field:'updateTime', title: '修改时间'}
             ]],

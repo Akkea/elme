@@ -26,4 +26,6 @@ public class BusinessController {
     public LayuiVo listpage(@RequestParam(defaultValue = "1") Integer pageNum, @RequestParam(defaultValue = "1") Integer pageSize){
         return businessService.listPage(pageNum,pageSize);
     }
+
+
 }
