@@ -44,8 +44,8 @@
                             <div class="layui-form-item">
                             <label class="layui-form-label">商家名字</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" lay-verify="title" autocomplete="off"
-                                       placeholder="请输入商家名字" class="layui-input">
+                                <input type="text" autocomplete="on"
+                                       placeholder="请输入商家名字" id="store-name" class="layui-input">
                             </div>
                         </div>
                         </div>
@@ -53,7 +53,7 @@
                             <div class="layui-form-item">
                             <label class="layui-form-label">商家类型</label>
                             <div class="layui-input-block">
-                                <select name="interest" lay-filter="aihao">
+                                <select id="order-type">
                                     <option value="" selected>所有类型</option>
                                     <option value="1">早餐</option>
                                     <option value="2">午餐</option>
@@ -65,18 +65,18 @@
                         <div class="layui-inline toppadding">
                             <div class="layui-form-item">
                                 <label class="layui-form-label">商家状态</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="like[write]" value="1" title="未审核">
-                                    <input type="checkbox" name="like[read]" value="2" title="正常">
-                                    <input type="checkbox" name="like[game]" value="3" title="封禁">
+                                <div class="layui-input-block store-status" >
+                                    <input type="checkbox"  value="1" title="未审核" checked>
+                                    <input type="checkbox"  value="2" title="正常" checked>
+                                    <input type="checkbox"  value="3" title="封禁" checked>
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-inline toppadding  shaixuan">
+                        <div class="layui-inline toppadding  shaixuan" id="query">
                             <button type="button" class="layui-btn">筛选</button>
                         </div>
                     </form>
-                    <table class="layui-hide" id="business-list"></table>
+                    <table class="layui-hide" id="business-list" lay-filter="business-list"></table>
                 </div>
             </div>
         </div>
@@ -91,14 +91,17 @@
         index: 'lib/index' //主入口模块
     }).use(['index', 'table'], function(){
         let table = layui.table;
+        $ = layui.$;
+        layer = layui.layer;
         table.render({
             //表格选择器
-            elem: '#business-list'
-            ,url: '${pageContext.request.contextPath}/business/listPage'
+            id:'businessList'
+            ,elem: '#business-list'
+            ,url: '${pageContext.request.contextPath}/business/listDynamics'
             ,cols: [[
                 {type:'checkbox'},
                 {type:'numbers', title: '序号'},
-                {field:'storeName', title: '商家名字'},
+                {field:'storeName', title: '商家名字',edit:'text'},
                 {field:'storeAddress', title: '商家地址'},
                 {field:'storeBlurb', title: '简介'},
                 {field:'mainImage', title: '商家图片'},
@@ -124,6 +127,56 @@
             limit:5,
             //设置分页间距
             limits : [5,10,15,20,30]
+        })
+        table.on('edit(business-list)',function (upd){
+            //发送ajax请求
+            $.ajax({
+                type:'post',
+                url:'${pageContext.request.contextPath}/business/dynamicsUpdateById',
+                data:{
+                    id:upd.data.id,
+                    storeName:upd.value
+                },
+                success:function (res){
+                    if (res.code ==0){
+                        //页面刷新
+                        layer.msg('修改成功',{icon:1})
+                        table.reloadData('businessList')
+                    }else {
+                        layer.alert(res.msg,{icon:2})
+                    }
+                },
+            })
+        })
+        let param={};
+        $('#query').click(function (e){
+            param = {};
+            //获取商家状态
+            let storeStatus=$('.store-status input:checked');
+            if (storeStatus.length==0){
+                layer.alert("至少选择一个类别",{icon: 0});
+                return;
+            }
+            if (storeStatus.length != 3){
+                param.storeStatus = '';
+                for (let item of storeStatus){
+                    param.storeStatus += item.value + ',';
+                }
+                //去除最后一位“，”
+                param.storeStatus = param.storeStatus.substr(0,param.storeStatus.length-1);
+            }
+            //获取商家名
+            let storeName=$('#store-name').val();
+            if (storeName.trim()){
+                param.storeName=storeName;
+            }
+            //获取商家类型
+            let orderType = $('#order-type option:selected').val();
+            if (orderType!=0){
+                param.orderType=orderType;
+            }
+            console.log(param)
+            table.reload('businessList',{where:param})
         })
     });
 </script>

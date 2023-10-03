@@ -23,8 +23,76 @@
     </resultMap>
     <sql id="column">id,username,password,phone,email,store_name,store_address,store_blurb,main_image,order_type_id,start_price,
         delivery_price,store_remarks,store_status,create_time,update_time</sql>
+
     <select id="list" resultMap="base">
         select <include refid="column"/> from e_business order by update_time desc
     </select>
+    <select id="listDynamics" resultMap="base" >
+        select <include refid="column"/> from e_business
+        <where>
+            <if test="storeName!=null">
+                <bind name="sn" value="'%'+storeName+'%'"/>
+                store_name like #{sn}
+            </if>
+            <if test="orderType != null">
+                and order_type_id = #{orderType}
+            </if>
+            <if test="storeStatus != null">
+                and store_status in
+                <foreach collection="storeStatus" item="status" open="(" close=")" separator=",">
+                    #{status}
+                </foreach>
+            </if>
+        </where>
+        order by update_time desc
+    </select>
 
+    <update id="dynamicsUpdateById">
+        update e_business
+        <set>
+            <if test="username!=null">
+                username = #{username}
+            </if>
+            <if test="password!=null">
+                ,password = #{password}
+            </if>
+            <if test="phone!=null">
+                ,phone = #{phone}
+            </if>
+            <if test="email!=null">
+                ,email = #{email}
+            </if>
+            <if test="storeName!=null">
+                ,store_name = #{storeName}
+            </if>
+            <if test="storeAddress!=null">
+                ,store_address = #{storeAddress}
+            </if>
+            <if test="storeBlurb!=null">
+                ,store_blurb = #{storeBlurb}
+            </if>
+            <if test="username!=null">
+                ,main_image = #{mainImage}
+            </if>
+            <if test="orderType!=null">
+                ,order_type_id = #{orderType}
+            </if>
+            <if test="startPrice!=null">
+                ,start_price = #{startPrice}
+            </if>
+            <if test="deliveryPrice!=null">
+                ,delivery_price = #{deliveryPrice}
+            </if>
+            <if test="storeRemarks!=null">
+                ,store_remarks = #{storeRemarks}
+            </if>
+            <if test="storeStatus!=null">
+                ,store_status = #{storeStatus}
+            </if>
+            <if test="updateTime!=null">
+                ,update_time = #{updateTime}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
 </mapper>
