@@ -139,7 +139,7 @@
                 },
                 success:function (res){
                     if (res.code ==0){
-                        //页面刷新
+                        //页面刷新。
                         layer.msg('修改成功',{icon:1})
                         table.reloadData('businessList')
                     }else {
