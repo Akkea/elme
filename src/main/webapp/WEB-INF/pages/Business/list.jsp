@@ -175,7 +175,6 @@
             if (orderType!=0){
                 param.orderType=orderType;
             }
-            console.log(param)
             table.reload('businessList',{where:param})
         })
     });
