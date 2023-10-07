@@ -63,7 +63,7 @@ public class BusinessServiceImpl implements BusinessService {
         Business business = new Business();
         //复制数据到business 用来给mapper层
         BeanUtils.copyProperties(businessForm,business);
-        //更新时间没传，单独处理
+        //更新时间没传，单独处理。
         business.setUpdateTime(new Date());
         businessMapper.dynamicsUpdateById(business);
         return LayuiVo.success();
